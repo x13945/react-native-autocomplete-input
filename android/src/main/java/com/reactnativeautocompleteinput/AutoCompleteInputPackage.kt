@@ -6,12 +6,12 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ViewManager
 
 
-class AutocompleteInputPackage : ReactPackage {
+class AutoCompleteInputPackage : ReactPackage {
     override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
         return emptyList()
     }
 
     override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
-        return listOf(AutocompleteInputViewManager())
+        return listOf(AutoCompleteInputViewManager())
     }
 }

@@ -1,6 +1,6 @@
 # react-native-autocomplete-input
 
-Autocomplete component for react-native
+AutoComplete component for react-native
 
 ## Installation
 
@@ -11,11 +11,19 @@ npm install react-native-autocomplete-input
 ## Usage
 
 ```js
-import AutocompleteInput from "react-native-autocomplete-input";
+import AutoCompleteInputView from "react-native-autocomplete-input";
 
 // ...
 
-const result = await AutocompleteInput.multiply(3, 7);
+      <AutoCompleteInputView
+        suggestions={['android', 'apple', 'bob', 'banana']}
+        onChangeText={(value: string) => {
+          console.log(1, value);
+        }}
+        textColor={'#f00'}
+        style={styles.box}
+      />
+
 ```
 
 ## Contributing
