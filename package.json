@@ -1,5 +1,5 @@
 {
-  "name": "react-native-autocomplete-input",
+  "name": "native-autocomplete-input",
   "version": "0.1.0",
   "description": "AutoComplete component for react-native",
   "main": "lib/commonjs/index",
