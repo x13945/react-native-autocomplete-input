@@ -7,13 +7,13 @@ For now, we only implement the Android, iOS is on the way.
 ## Installation
 
 ```sh
-npm install react-native-autocomplete-input
+npm install native-autocomplete-input
 ```
 
 ## Usage
 
 ```js
-import AutoCompleteInputView from "react-native-autocomplete-input";
+import AutoCompleteInputView from "native-autocomplete-input";
 
 // ...
 
