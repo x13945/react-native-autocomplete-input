@@ -38,6 +38,7 @@ import AutoCompleteInputView from "react-native-autocomplete-input";
 | onChangeText     | Function        | Callback that is called when the text input's text changes. Changed text is passed as an argument to the callback handler |
 | defaultValue     | string          | Default value for the input view                             |
 | placeholderColor | string of color | Text color of the input view holder                          |
+| placeholder      | string          | Placeholder for text input view                              |
 
 
 
