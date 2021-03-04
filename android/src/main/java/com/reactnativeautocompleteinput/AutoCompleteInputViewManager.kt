@@ -31,21 +31,37 @@ class AutoCompleteInputViewManager : SimpleViewManager<AppCompatAutoCompleteText
     private const val TAG = "AutocompleteInputView"
   }
 
+
   override fun getName() = "AutoCompleteInputView"
 
   override fun createViewInstance(reactContext: ThemedReactContext): AppCompatAutoCompleteTextView {
-    return AppCompatAutoCompleteTextView(reactContext).apply {
+    val view = AppCompatAutoCompleteTextView(reactContext).apply {
       background = null
       val inputType: Int = inputType
       setInputType(inputType and InputType.TYPE_TEXT_FLAG_MULTI_LINE.inv())
 //      setReturnKeyType("done")
     }
+    return view
+  }
+
+  override fun onDropViewInstance(view: AppCompatAutoCompleteTextView) {
+    super.onDropViewInstance(view)
   }
 
   override fun addEventEmitters(reactContext: ThemedReactContext, view: AppCompatAutoCompleteTextView) {
     super.addEventEmitters(reactContext, view)
+    view.onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, id ->
+      Log.d(TAG, "onItemClick: ${position}, $id")
+      val event: WritableMap = Arguments.createMap()
+      event.putString("text", "" + parent.getItemAtPosition(position))
+      event.putInt("index", position)
+      reactContext.getJSModule(RCTEventEmitter::class.java).receiveEvent(
+        view.id,
+        "selectChanged",
+        event)
+    }
     view.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-      override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+      override fun onItemSelected(parent: AdapterView<*>, _view: View, position: Int, id: Long) {
         Log.d(TAG, "onItemSelected: ${position}, $id")
         val event: WritableMap = Arguments.createMap()
         event.putString("text", "" + parent.getItemAtPosition(position))
