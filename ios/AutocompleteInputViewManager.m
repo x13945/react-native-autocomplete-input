@@ -5,16 +5,21 @@
 
 @implementation AutocompleteInputViewManager
 
-RCT_EXPORT_MODULE(AutocompleteInputView)
+RCT_EXPORT_MODULE(AutoCompleteInputView)
 
-- (UIView *)view
+- (UITextField *)view
 {
-  return [[UIView alloc] init];
+  return [[UITextField alloc] init];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(color, NSString, UIView)
+RCT_CUSTOM_VIEW_PROPERTY(textColor, NSString, UITextField)
 {
-  [view setBackgroundColor:[self hexStringToColor:json]];
+    [view setTextColor:[self hexStringToColor:json]];
+}
+
+RCT_CUSTOM_VIEW_PROPERTY(fontSize, NSInteger, UITextField)
+{
+    [view setTextColor:[self hexStringToColor:json]];
 }
 
 - hexStringToColor:(NSString *)stringToConvert

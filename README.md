@@ -1,6 +1,8 @@
 # react-native-autocomplete-input
 
-AutoComplete component for react-native
+This is an auto complete input component for react-native. For the native, Android use `AutoCompleteTextView`, iOS use `UITextField`.
+
+For now, we only implement the Android, iOS is on the way.
 
 ## Installation
 
@@ -25,6 +27,24 @@ import AutoCompleteInputView from "react-native-autocomplete-input";
       />
 
 ```
+
+## Props
+
+| Prop             | Type            | Description                                                  |
+| ---------------- | --------------- | ------------------------------------------------------------ |
+| suggestions      | string array    | An array with suggestion items                               |
+| textColor        | string of rgba  | Text color of the input view                                 |
+| fontSize         | number          | Font size for the input view                                 |
+| onChangeText     | Function        | Callback that is called when the text input's text changes. Changed text is passed as an argument to the callback handler |
+| defaultValue     | string          | Default value for the input view                             |
+| placeholderColor | string of color | Text color of the input view holder                          |
+
+
+
+## TODO
+
+- iOS support
+- Custom style for the suggest item.
 
 ## Contributing
 

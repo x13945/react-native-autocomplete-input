@@ -91,18 +91,13 @@ class AutoCompleteInputViewManager : SimpleViewManager<AppCompatAutoCompleteText
     view.hint = placeholder
   }
 
-  @ReactProp(name = "placeholderTextColor", customType = "Color")
+  @ReactProp(name = "placeholderColor", customType = "Color")
   fun setPlaceholderTextColor(view: AppCompatAutoCompleteTextView, color: Int?) {
     if (color == null) {
       view.setHintTextColor(DefaultStyleValuesUtil.getDefaultTextColorHint(view.context))
     } else {
       view.setHintTextColor(color)
     }
-  }
-
-  @ReactProp(name = "placeholderColor", customType = "Color", defaultInt = Color.BLACK)
-  fun setPlaceholderColor(view: AppCompatAutoCompleteTextView, color: Int): Unit {
-    view.setHintTextColor(color)
   }
 
   @ReactProp(name = "textColor", customType = "Color")
