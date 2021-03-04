@@ -7,9 +7,12 @@ export default function App() {
   return (
     <View style={styles.container}>
       <AutoCompleteInputView
-        suggestions={['android', 'apple', 'bob', 'banana']}
+        suggestions={['android', 'apple', 'baob', 'banana']}
         onChangeText={(value: string) => {
           console.log(1, value);
+        }}
+        onChangeSuggestion={(index: number, value: string) => {
+          console.log(index, value);
         }}
         textColor={'#f00'}
         style={styles.box}

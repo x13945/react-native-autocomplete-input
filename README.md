@@ -20,7 +20,10 @@ import AutoCompleteInputView from "react-native-autocomplete-input";
       <AutoCompleteInputView
         suggestions={['android', 'apple', 'bob', 'banana']}
         onChangeText={(value: string) => {
-          console.log(1, value);
+          console.log(value);
+        }}
+        onChangeSuggestion={(index:number, value:string) =>{
+          console.log('index', index, 'value', value);
         }}
         textColor={'#f00'}
         style={styles.box}
@@ -30,15 +33,16 @@ import AutoCompleteInputView from "react-native-autocomplete-input";
 
 ## Props
 
-| Prop             | Type            | Description                                                  |
-| ---------------- | --------------- | ------------------------------------------------------------ |
-| suggestions      | string array    | An array with suggestion items                               |
-| textColor        | string of rgba  | Text color of the input view                                 |
-| fontSize         | number          | Font size for the input view                                 |
-| onChangeText     | Function        | Callback that is called when the text input's text changes. Changed text is passed as an argument to the callback handler |
-| defaultValue     | string          | Default value for the input view                             |
-| placeholderColor | string of color | Text color of the input view holder                          |
-| placeholder      | string          | Placeholder for text input view                              |
+| Prop               | Type            | Description                                                  |
+| ------------------ | --------------- | ------------------------------------------------------------ |
+| suggestions        | string array    | An array with suggestion items                               |
+| textColor          | string of rgba  | Text color of the input view                                 |
+| fontSize           | number          | Font size for the input view                                 |
+| onChangeText       | Function        | Callback that is called when the text input's text changes. Changed text is passed as an argument to the callback handler |
+| defaultValue       | string          | Default value for the input view                             |
+| placeholderColor   | string of color | Text color of the input view holder                          |
+| placeholder        | string          | Placeholder for text input view                              |
+| onChangeSuggestion | Function        | Callback while user select suggestion                        |
 
 
 

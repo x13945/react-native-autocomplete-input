@@ -1,15 +1,20 @@
 package com.reactnativeautocompleteinput
 
-import android.graphics.Color
+import android.os.Build
 import android.text.Editable
 import android.text.InputType
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView
-import com.facebook.react.bridge.*
+import com.facebook.react.bridge.Arguments
+import com.facebook.react.bridge.ReactSoftException
+import com.facebook.react.bridge.ReadableArray
+import com.facebook.react.bridge.WritableMap
 import com.facebook.react.common.MapBuilder
 import com.facebook.react.uimanager.SimpleViewManager
 import com.facebook.react.uimanager.ThemedReactContext
@@ -18,6 +23,7 @@ import com.facebook.react.uimanager.ViewProps
 import com.facebook.react.uimanager.annotations.ReactProp
 import com.facebook.react.uimanager.events.RCTEventEmitter
 import com.facebook.react.views.text.DefaultStyleValuesUtil
+import java.util.*
 
 
 class AutoCompleteInputViewManager : SimpleViewManager<AppCompatAutoCompleteTextView>() {
@@ -39,8 +45,15 @@ class AutoCompleteInputViewManager : SimpleViewManager<AppCompatAutoCompleteText
   override fun addEventEmitters(reactContext: ThemedReactContext, view: AppCompatAutoCompleteTextView) {
     super.addEventEmitters(reactContext, view)
     view.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-      override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+      override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
         Log.d(TAG, "onItemSelected: ${position}, $id")
+        val event: WritableMap = Arguments.createMap()
+        event.putString("text", "" + parent.getItemAtPosition(position))
+        event.putInt("index", position)
+        reactContext.getJSModule(RCTEventEmitter::class.java).receiveEvent(
+          view.id,
+          "selectChanged",
+          event)
       }
 
       override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -73,6 +86,11 @@ class AutoCompleteInputViewManager : SimpleViewManager<AppCompatAutoCompleteText
         MapBuilder.of(
           "phasedRegistrationNames",
           MapBuilder.of("bubbled", "onChangeText")))
+      .put(
+        "selectChanged",
+        MapBuilder.of(
+          "phasedRegistrationNames",
+          MapBuilder.of("bubbled", "onChangeSuggestion")))
       .build()
   }
 
@@ -120,7 +138,26 @@ class AutoCompleteInputViewManager : SimpleViewManager<AppCompatAutoCompleteText
 
   @ReactProp(name = "suggestions")
   fun setSuggestions(view: AppCompatAutoCompleteTextView, suggestions: ReadableArray?) {
-    val adapter = if (suggestions != null) ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, suggestions.toArrayList().toArray()) else null
+    val data = suggestions?.toArrayList()?.toArray() as Array<*>?
+    Log.d(TAG, "suggest: " + Arrays.toString(data))
+    val adapter = if (data != null) ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, data) else null
     view.setAdapter(adapter)
+    if (data?.size == 1 && data[0] == view.text.toString()) {
+      Log.d(TAG, "ignore suggest")
+    } else {
+      if (view.isFocused) {
+        view.showDropDown()
+      }
+    }
+  }
+
+  @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+  @ReactProp(name = "defaultValue")
+  fun setDefaultValue(view: AppCompatAutoCompleteTextView, defaultValue: String) {
+    Log.d(TAG, "defaultValue: $defaultValue")
+    if (TextUtils.isEmpty(view.text)) {
+      view.setText(defaultValue, false)
+      view.setSelection(defaultValue.length)
+    }
   }
 }

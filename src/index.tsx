@@ -8,6 +8,7 @@ interface AutocompleteInputProps extends ViewProps {
   suggestions: string[];
   fontSize?: number;
   onChangeText?: (value: string) => void;
+  onChangeSuggestion?: (index: number, value: string) => void;
 }
 
 const NativeView = requireNativeComponent<AutocompleteInputProps>(
@@ -21,6 +22,11 @@ class AutoCompleteInputView extends Component<AutocompleteInputProps, S> {
     super(props);
   }
 
+  private _onChangeSuggestion = (event: any): void => {
+    const { index, text } = event.nativeEvent;
+    const { onChangeSuggestion } = this.props;
+    onChangeSuggestion && onChangeSuggestion(index, text);
+  };
   private _onChangeText = (event: any): void => {
     const text = event.nativeEvent.text;
     const { onChangeText } = this.props;
@@ -35,6 +41,7 @@ class AutoCompleteInputView extends Component<AutocompleteInputProps, S> {
         <NativeView
           {...nativeProps}
           onChangeText={this._onChangeText}
+          onChangeSuggestion={this._onChangeSuggestion}
           style={{ flex: 1, alignSelf: 'stretch' }}
         />
       </View>
