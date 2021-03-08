@@ -1,6 +1,6 @@
 {
   "name": "native-autocomplete-input",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "AutoComplete component for react-native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
