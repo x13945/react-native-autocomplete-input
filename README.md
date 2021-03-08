@@ -1,4 +1,4 @@
-# react-native-autocomplete-input
+# native-autocomplete-input
 
 This is an auto complete input component for react-native. For the native, Android use `AutoCompleteTextView`, iOS use `UITextField`.
 
